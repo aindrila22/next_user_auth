@@ -1,12 +1,12 @@
 "use client";
 
-import { Mail, Lock } from "lucide-react";
+import { Mail, Lock, User } from "lucide-react";
 import Image from "next/image";
-import bg from "../public/bg3.png";
-import logo from "../public/logo.png";
-import google from "../public/google2.svg";
+import bg from "../../public/bg-2.png";
+import logo from "../../public/logo.png";
+import google from "../../public/google2.svg";
 
-const Login = () => {
+const Signup = () => {
   return (
     <div
       className="min-h-screen"
@@ -31,12 +31,19 @@ const Login = () => {
             <div className="rounded px-4 py-2 shadow bg-[#90a5ef]">
               <Image src={logo} alt="bg" width={100} height={100} />
             </div>
-            <div className="text-slate-900 font-medium text-xl py-5">
-              Hello! Welcome Back
-            </div>
-
-            
             <form className="w-full px-5 py-6 space-y-6">
+              <div className="flex flex-col w-full lg:px-5">
+                <label className="text-sm">Fullname</label>
+                <div className="bg-white flex justify-start items-start py-3 px-4 rounded text-slate-600 text-lg mt-1">
+                  <User className="w-7 h-7 text-[#A1BDFD]" />
+                  <input
+                    type={"text"}
+                    placeholder="John Doe"
+                    name="name"
+                    className="outline-none w-full px-4"
+                  />
+                </div>
+              </div>
               <div className="flex flex-col w-full lg:px-5">
                 <label className="text-sm">Email</label>
                 <div className="bg-white flex justify-start items-start py-3 px-4 rounded text-slate-600 text-lg mt-1">
@@ -60,13 +67,12 @@ const Login = () => {
                     className="outline-none w-full px-4"
                   />
                 </div>
-
                 <div className="grid place-items-center w-full mx-auto pt-7">
                   <button
                     type="submit"
                     className="bg-[#5D7DF3] text-white text-lg w-full px-8 py-3 rounded-md uppercase font-semibold"
                   >
-                    Login
+                    Register
                   </button>
                 </div>
                 <div className="flex justify-center w-full items-center gap-3 py-3">
@@ -74,18 +80,13 @@ const Login = () => {
                   <div className="mt-3">or</div>
                   <div className="border-b border-gray-800 py-2 w-full px-6" />
                 </div>
-                <div className="flex justify-center items-center w-full gap-8 pb-8">
-                  <div className="rounded px-6 py-2 shadow cursor-pointer bg-gray-50 grid place-items-center mx-auto mb-4">
-                    <Image src={google} alt="bg" width={100} height={100} />
-                  </div>{" "}
-                </div>
+                <div className="rounded px-6 py-2 shadow cursor-pointer bg-gray-50 grid place-items-center mx-auto mb-8">
+                  <Image src={google} alt="bg" width={100} height={100} />
+                </div>{" "}
                 <div className="text-lg text-slate-900 font-medium">
-                  <span>Don't have an account?</span>
-                  <a
-                    href="/signup"
-                    className="text-[#5D7DF3] pl-3 hover:underline"
-                  >
-                    Create an account
+                  <span>Have an account?</span>
+                  <a href="/" className="text-[#5D7DF3] pl-3 hover:underline">
+                    Login
                   </a>
                 </div>
               </div>
@@ -97,4 +98,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Signup;
