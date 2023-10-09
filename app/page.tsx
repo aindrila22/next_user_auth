@@ -5,8 +5,63 @@ import Image from "next/image";
 import bg from "../public/bg3.png";
 import logo from "../public/logo.png";
 import google from "../public/google2.svg";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { signIn } from "next-auth/react";
 
 const Login = () => {
+  const [loading, setLoading] = useState(false);
+  const router = useRouter();
+  const [error, setError] = useState("");
+  const [user, setUser] = useState({
+    email: "",
+    password: "",
+  });
+
+  const handleInputChange = (event: any) => {
+    const { name, value } = event.target;
+    return setUser((prevInfo) => ({ ...prevInfo, [name]: value }));
+  };
+
+  const handleSubmit = async (e: any) => {
+    e.preventDefault();
+    setLoading(true);
+    try {
+      if (!user.email || !user.password) {
+        setError("please fill all the fields");
+        return;
+      }
+      const emailRegex = /^([a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})$/;
+      if (!emailRegex.test(user.email)) {
+        setError("invalid email id");
+        return;
+      }
+
+      const res = await signIn("credentials", {
+        email: user.email,
+        password: user.password,
+        redirect: false,
+      });
+
+      if (res?.error) {
+        console.log(res);
+        setError("error");
+      }
+
+      setError("");
+      router.push("/dashboard");
+    } catch (error) {
+      console.log(error);
+      setError("");
+    } finally {
+      setLoading(false);
+
+      setUser({
+        email: "",
+        password: "",
+      });
+    }
+  };
   return (
     <div
       className="min-h-screen"
@@ -35,8 +90,10 @@ const Login = () => {
               Hello! Welcome Back
             </div>
 
-            
-            <form className="w-full px-5 py-6 space-y-6">
+            <form
+              className="w-full px-5 py-6 space-y-6"
+              onSubmit={handleSubmit}
+            >
               <div className="flex flex-col w-full lg:px-5">
                 <label className="text-sm">Email</label>
                 <div className="bg-white flex justify-start items-start py-3 px-4 rounded text-slate-600 text-lg mt-1">
@@ -46,6 +103,8 @@ const Login = () => {
                     placeholder="example@123.com"
                     name="email"
                     className="outline-none w-full px-4"
+                    value={user.email}
+                    onChange={handleInputChange}
                   />
                 </div>
               </div>
@@ -58,6 +117,8 @@ const Login = () => {
                     placeholder="**********"
                     name="password"
                     className="outline-none w-full px-4"
+                    value={user.password}
+                    onChange={handleInputChange}
                   />
                 </div>
 
