@@ -8,6 +8,7 @@ import logo from "../../public/logo.png";
 import google from "../../public/google2.svg";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import { signIn } from "next-auth/react";
 
 const Signup = () => {
   const [loading, setLoading] = useState(false);
@@ -140,9 +141,11 @@ const Signup = () => {
                   <div className="mt-3">or</div>
                   <div className="border-b border-gray-800 py-2 w-full px-6" />
                 </div>
-                <div className="rounded px-6 py-2 shadow cursor-pointer bg-gray-50 grid place-items-center mx-auto mb-8">
+
+                <div onClick={()=>signIn("google")} className="rounded px-6 py-2 shadow cursor-pointer bg-gray-50 grid place-items-center mx-auto mb-8">
                   <Image src={google} alt="bg" width={100} height={100} />
                 </div>{" "}
+
                 <div className="text-lg text-slate-900 font-medium">
                   <span>Have an account?</span>
                   <a href="/" className="text-[#5D7DF3] pl-3 hover:underline">
